@@ -1,0 +1,8 @@
+#player-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 300px auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 0 50px;
+}

@@ -1,0 +1,23 @@
+.player {
+  border: 2px solid #222;
+  border-radius: 5px;
+  min-width: 150px;
+  width: 100%;
+}
+
+.player-sprite {
+  width: 150px;
+  margin: 0 auto;
+  height: 200px;
+}
+
+.player-sprite-1 {
+  background: blue;
+}
+
+.player-sprite-2 {
+  background: violet;
+}
+.player span {
+  font-size: 0.6rem;
+}

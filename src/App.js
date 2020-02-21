@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useReducer} from 'react'
+import Player from './Components/Player'
+import './Styles/base.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const initialState = {
+  winner: "",
+  currentTurn: 1,
+  player1: {
+    id: 1,
+    name: "Ege",
+    hitChance: 0,
+    chargeKey: 'A',
+    attackKey: 'S'
+  },
+  player2: {
+    id: 2,
+    name: "Can",
+    hitChance: 0,
+    chargeKey: 'L',
+    attackKey: 'K'
+
+  }
 }
 
-export default App;
+function reducer(state, action) {
+  switch(action.type) {
+    case 'INCREMENT_HIT_CHANCE':
+      return {
+        ...state,
+        [action.player]: {
+          ...state[action.player],
+          hitChance: state[action.player].hitChance + action.amount
+        }
+      }
+    case 'RESET_HIT_CHANCE':
+      return {
+        ...state,
+        [action.player]: {
+          ...state[action.player],
+          hitChance: 0
+        }
+      }
+    case 'END_TURN':
+      return {
+        ...state,
+        currentTurn: state.currentTurn === 1 ? 2 : 1
+      }
+    case 'WIN':
+      return {
+        ...state,
+        winner: action.player
+      }
+    default:
+      return state;
+  }
+}
+
+function App() {
+  
+  const [playState, dispatch] = useReducer(reducer, initialState);
+  console.log(playState.currentTurn);
+  if (playState.winner) console.log(playState.winner + " wins!");
+
+  return (
+    <div id="player-container">
+      <Player turn={playState.currentTurn === 1} dispatch={dispatch} player={playState.player1}/>
+      <Player turn={playState.currentTurn === 2} dispatch={dispatch} player={playState.player2}/>
+    </div>
+  )
+}
+
+export default App
